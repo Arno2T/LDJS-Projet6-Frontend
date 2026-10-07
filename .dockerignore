@@ -1,0 +1,33 @@
+# Ignore dependencies and build output
+node_modules/
+dist/
+out/
+.tmp/
+.cache/
+
+# Ignore Vite and React-specific build artifacts
+.vite/
+.vitepress/
+.npm/
+coverage/
+
+# Ignore environment and config files
+**/*.env*
+**/*.log*
+
+# Ignore local development files
+.git/
+.gitignore
+.vscode/
+.claude/
+
+# Docker Files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Others
+README.md
+.DS_Store
+values.tpl.yaml
+.idea/

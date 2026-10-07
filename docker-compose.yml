@@ -1,0 +1,7 @@
+services:
+  frontend:
+    image: olympic-front
+    restart: unless-stopped
+    build: .
+    ports:
+      - "8080:80"
