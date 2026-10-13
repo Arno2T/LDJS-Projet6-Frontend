@@ -49,8 +49,8 @@ describe('Home Component', () => {
 
   it('should display multiple countries', async () => {
     const mockData = [
-      { id: 1, country: 'France', participations: [] },
-      { id: 2, country: 'Germany', participations: [] },
+      { id: 1, country: 'Fnce', participations: [] },
+      { id: 2, country: 'Gmany', participations: [] },
     ];
 
     renderWithLoader(mockData);
