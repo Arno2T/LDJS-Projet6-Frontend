@@ -18,9 +18,11 @@ Application React pour visualiser les donnees de participation aux Jeux Olympiqu
 ## Installation
 
 ```bash
-git clone <repository-url>
-cd p6-dfsjs-frontend
+git clone https://github.com/Arno2T/LDJS-Projet6-Frontend.git
+cd LDJS-Projet6-Frontend
 npm install
+
+docker compose up --build -d  // localhost:8080
 ```
 
 ## Scripts disponibles
