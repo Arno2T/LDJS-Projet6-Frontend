@@ -19,7 +19,7 @@ jobs:
   test:
     name: Tests unitaires
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       contents: read
       actions: read
       checks: write
@@ -38,6 +38,7 @@ jobs:
             echo "::error::Aucun package.json, pyproject.toml ou requirements.txt trouvé"
             exit 1
           fi
+
       - name: Installer Node.js
         if: steps.detect.outputs.type == 'node'
         uses: actions/setup-node@v7
