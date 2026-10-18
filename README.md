@@ -34,7 +34,7 @@ L'image est construite en deux etapes : build Vite avec Node, puis service des f
 docker compose up --build -d
 ```
 
-L'application est accessible sur **http://localhost:8080**.
+L'application est accessible sur **http://localhost**.
 
 ```bash
 docker compose logs -f   # suivre les logs
@@ -53,15 +53,15 @@ La CI publie une image a chaque push sur `main`. Tags disponibles :
 
 ```bash
 docker pull ghcr.io/arno2t/ldjs-projet6-frontend:latest
-docker run -d --name olympic-front -p 8080:80 ghcr.io/arno2t/ldjs-projet6-frontend:latest
+docker run -d --name olympic-front -p 80:80 ghcr.io/arno2t/ldjs-projet6-frontend:latest
 ```
 
-L'application est accessible sur **http://localhost:8080**. Pour l'arreter : `docker rm -f olympic-front`.
+L'application est accessible sur **http://localhost**. Pour l'arreter : `docker rm -f olympic-front`.
 
 > Si le package est prive, authentifiez-vous d'abord avec un Personal Access Token (scope `read:packages`) :
 > `echo <TOKEN> | docker login ghcr.io -u <utilisateur-github> --password-stdin`
 
-> Le Backend utilise lui aussi le port `8080`. Pour lancer les deux projets en meme temps, changez le port de l'un d'eux (ex : `-p 8081:80`, ou `"8081:80"` dans `docker-compose.yml`).
+> Le port `80` doit etre libre sur la machine. S'il est deja utilise, changez le port hote (ex : `-p 8081:80`, ou `"8081:80"` dans `docker-compose.yml`).
 
 ## Lancer l'application sans Docker
 
