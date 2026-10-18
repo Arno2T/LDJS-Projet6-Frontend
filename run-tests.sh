@@ -20,12 +20,26 @@ detect_project_type() {
   fi
 }
 
+detect_node_framework() {
+  if grep -q '"react"' package.json; then
+    echo "React"
+  elif grep -q '"@nestjs/core"' package.json; then
+    echo "Node.js (NestJS)"
+  else
+    echo "Node.js"
+  fi
+}
+
 PROJECT_TYPE="$(detect_project_type)"
 log "Type de projet détecté: $PROJECT_TYPE"
 
 if [ "$PROJECT_TYPE" = "unknown" ]; then
   error "Aucun package.json, pyproject.toml ou requirements.txt trouvé"
   exit 1
+fi
+
+if [ "$PROJECT_TYPE" = "node" ]; then
+  log "Application détectée: $(detect_node_framework)"
 fi
 
 REQUIRED_NODE_MAJOR=22
