@@ -82,6 +82,8 @@ Les versions sont gerees par [semantic-release](https://semantic-release.gitbook
 | `feat!: ...` ou `BREAKING CHANGE:` dans le corps | major (`1.0.0` → `2.0.0`) |
 | `chore:`, `ci:`, `docs:`, `test:`... | pas de nouvelle version |
 
+Sur chaque pull request, le job **Conventional Commits** verifie avec [commitlint](https://commitlint.js.org/) les messages de commit et le titre de la PR. Pour verifier un message en local : `echo "feat: mon message" | npx commitlint`.
+
 Pour publier une version : onglet **Actions** > workflow **CI** > **Run workflow** sur la branche `main`. Le workflow lance les tests, cree la release GitHub (tag, notes, `CHANGELOG.md`, version dans `package.json`) puis publie l'image Docker taguee avec la version.
 
 ## Scripts disponibles
