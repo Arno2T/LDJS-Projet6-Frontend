@@ -14,6 +14,7 @@ Application React pour visualiser les donnees de participation aux Jeux Olympiqu
 
 - **Node.js** 22.x ou superieur
 - **npm** 10.x ou superieur
+- **Docker** avec Docker Compose v2 (pour lancer l'application en conteneur)
 
 ## Installation
 
@@ -21,9 +22,67 @@ Application React pour visualiser les donnees de participation aux Jeux Olympiqu
 git clone https://github.com/Arno2T/LDJS-Projet6-Frontend.git
 cd LDJS-Projet6-Frontend
 npm install
-
-docker compose up --build -d  // localhost:8080
 ```
+
+## Lancer l'application avec Docker
+
+L'image est construite en deux etapes : build Vite avec Node, puis service des fichiers statiques par Nginx (utilisateur non root).
+
+### Option 1 : construire l'image en local
+
+```bash
+docker compose up --build -d
+```
+
+L'application est accessible sur **http://localhost:8080**.
+
+```bash
+docker compose logs -f   # suivre les logs
+docker compose down      # arreter le conteneur
+```
+
+### Option 2 : utiliser l'image publiee sur GitHub Container Registry
+
+La CI publie une image a chaque push sur `main`. Tags disponibles :
+
+| Tag | Description |
+|---|---|
+| `latest` | Dernier build de `main` |
+| `X.Y.Z` / `X.Y` | Version semantique produite par une release (ex : `1.0.0`) |
+| `<branche>-<sha>` | Build d'un commit precis (ex : `main-569028a`) |
+
+```bash
+docker pull ghcr.io/arno2t/ldjs-projet6-frontend:latest
+docker run -d --name olympic-front -p 8080:80 ghcr.io/arno2t/ldjs-projet6-frontend:latest
+```
+
+L'application est accessible sur **http://localhost:8080**. Pour l'arreter : `docker rm -f olympic-front`.
+
+> Si le package est prive, authentifiez-vous d'abord avec un Personal Access Token (scope `read:packages`) :
+> `echo <TOKEN> | docker login ghcr.io -u <utilisateur-github> --password-stdin`
+
+> Le Backend utilise lui aussi le port `8080`. Pour lancer les deux projets en meme temps, changez le port de l'un d'eux (ex : `-p 8081:80`, ou `"8081:80"` dans `docker-compose.yml`).
+
+## Lancer l'application sans Docker
+
+```bash
+npm run dev
+```
+
+L'application est accessible sur **http://localhost:5173**.
+
+## Versions et releases
+
+Les versions sont gerees par [semantic-release](https://semantic-release.gitbook.io/) a partir des messages de commit, qui doivent respecter [Conventional Commits](https://www.conventionalcommits.org/fr/) :
+
+| Type de commit | Effet sur la version |
+|---|---|
+| `fix: ...` | patch (`1.0.0` → `1.0.1`) |
+| `feat: ...` | minor (`1.0.0` → `1.1.0`) |
+| `feat!: ...` ou `BREAKING CHANGE:` dans le corps | major (`1.0.0` → `2.0.0`) |
+| `chore:`, `ci:`, `docs:`, `test:`... | pas de nouvelle version |
+
+Pour publier une version : onglet **Actions** > workflow **CI** > **Run workflow** sur la branche `main`. Le workflow lance les tests, cree la release GitHub (tag, notes, `CHANGELOG.md`, version dans `package.json`) puis publie l'image Docker taguee avec la version.
 
 ## Scripts disponibles
 
